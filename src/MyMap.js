@@ -19,7 +19,7 @@ const mapStyle = {
       type: 'raster',
       tiles: [
         // Use DataBC Web Mercator Base Map
-        'http://maps.gov.bc.ca/arcserver/services/Province/web_mercator_cache/MapServer/WMSServer?bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&srs=EPSG:3857&width=256&height=256&exceptions=text/xml&styles=default&layers=0'
+        'https://maps.gov.bc.ca/arcserver/services/Province/web_mercator_cache/MapServer/WMSServer?bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&srs=EPSG:3857&width=256&height=256&exceptions=text/xml&styles=default&layers=0'
       ],
       tileSize: 256
     }
