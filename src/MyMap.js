@@ -53,7 +53,12 @@ class Markers extends React.PureComponent {
             {...{
               sprite: 'mapbox://sprites/mapbox/bright-v8'
             }}>
-            <Pin label={feature.properties.OPERATOR_NAME} />
+            <Pin
+              label={feature.properties.OPERATOR_NAME}
+              onClick={() =>
+                window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ')
+              }
+            />
           </Marker>
         )
       )
