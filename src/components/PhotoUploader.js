@@ -19,19 +19,24 @@ const PhotoUploader = () => {
 
   const handleUpload = e => {
     for (const file of e.target.files) {
-      const formData = new FormData()
-      formData.append('photo', file)
+      const fileReader = new FileReader()
+      fileReader.readAsDataURL(file)
+      fileReader.onload = () => {
 
-      window.fetch('/photo', {
-        method: 'POST',
-        body: formData // This is your file object
-      }).then(
-        response => response.json() // if the response is a JSON object
-      ).then(
-        success => console.log(success) // Handle the success response object
-      ).catch(
-        error => console.log(error) // Handle the error response object
-      )
+        window.fetch('/photo', {
+          method: 'POST',
+          body: JSON.stringify({photo: fileReader.result}),
+          headers: {
+            'content-type': 'application/json'
+          }
+        }).then(
+          response => response.json() // if the response is a JSON object
+        ).then(
+          success => console.log(success) // Handle the success response object
+        ).catch(
+          error => console.log(error) // Handle the error response object
+        )
+      }
     }
   }
 

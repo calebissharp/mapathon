@@ -4,8 +4,6 @@ const helmet = require('helmet')
 const lusca = require('lusca')
 const bodyParser = require('body-parser')
 const cors = require('cors')
-const multer = require('multer')
-const upload = multer()
 
 const ONE_DAY = 24 * (60 * 60 * 1000)
 const TWO_WEEKS = 14 * ONE_DAY
@@ -39,15 +37,15 @@ app.set('trust proxy', 1) // trust first proxy
 
 app.use(cors())
 
-app.post('/photo', upload.single('photo'), async (req, res) => {
+app.post('/photo', async (req, res) => {
   try {
-    if (!req.file) {
-      throw new Error(`File 'photo' is not included!`)
+    if (!req.body.photo) {
+      throw new Error(`Base-64 encoded image 'photo' is not included!`)
     }
 
     console.log('Got a photo!')
 
-    res.send(200)
+    res.sendStatus(200)
   } catch (error) {
     res.status(400).json({ error: error.message || error })
   }
