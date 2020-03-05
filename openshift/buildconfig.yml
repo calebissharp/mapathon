@@ -25,7 +25,7 @@ objects:
       git:
         ref: feature/openshift-configs
         uri: https://github.com/calebissharp/mapathon.git
-      contextdir: mapproxycontainer
+      contextDir: mapproxycontainer
       type: Git
     strategy:
       type: Docker
