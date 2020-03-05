@@ -1,0 +1,34 @@
+apiVersion: template.openshift.io/v1
+kind: Template
+
+objects:
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    name: mapproxy
+  spec:
+    runPolicy: Parallel
+    nodeSelector:
+      beta.kubernetes.io/os: linux
+    output:
+      to:
+        kind: ImageStreamTag
+        name: mapproxy:latest
+    resources:
+      limits:
+        cpu: 2000m
+        memory: 8Gi
+      requests:
+        cpu: 1000m
+        memory: 2Gi
+    source:
+      git:
+        ref: feature/openshift-configs
+        uri: https://github.com/calebissharp/mapathon.git
+      contextdir: mapproxycontainer
+      type: Git
+    strategy:
+      type: Docker
+    triggers: []
+  status:
+    lastVersion: 0
