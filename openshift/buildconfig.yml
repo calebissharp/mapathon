@@ -1,6 +1,12 @@
 apiVersion: template.openshift.io/v1
 kind: Template
 
+parameters:
+- description: Git ref
+  displayName: Git ref
+  name: GIT_REF
+  required: true
+
 objects:
 - apiVersion: build.openshift.io/v1
   kind: BuildConfig
@@ -23,7 +29,7 @@ objects:
         memory: 2Gi
     source:
       git:
-        ref: feature/openshift-configs
+        ref: ${GIT_REF}
         uri: https://github.com/calebissharp/mapathon.git
       contextDir: mapproxycontainer
       type: Git
