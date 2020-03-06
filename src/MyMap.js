@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import MapGL, { Source, Layer, Marker } from 'react-map-gl'
 import Immutable from 'immutable'
 import Pin from './components/Pin'
+import AreaSelector from './components/AreaSelector'
 
 const dataLayer = {
   id: 'data',
@@ -15,23 +16,82 @@ const dataLayer = {
 const mapStyle = {
   version: 8,
   sources: {
-    'base-tiles': {
+    base: {
       type: 'raster',
       tiles: [
-        // Use DataBC Web Mercator Base Map
-        'https://maps.gov.bc.ca/arcserver/services/Province/web_mercator_cache/MapServer/WMSServer?bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&srs=EPSG:3857&width=256&height=256&exceptions=text/xml&styles=default&layers=0'
+        // 'http://localhost:8080/tiles/databc/EPSG3857/{z}/{x}/{y}.png'
+        'https://mapproxyoc-range-myra-dev.pathfinder.gov.bc.ca/tiles/databc/EPSG3857/{z}/{x}/{y}.png'
       ],
+      scheme: 'xyz',
       tileSize: 256
     }
+    // base: {
+    //   type: 'raster',
+    //   tiles: [
+    //     'http://127.0.0.1:8080/'
+    //   ],
+    //   tileSize: 256,
+    //   scheme: 'tms'
+    // }
+    // base: {
+    //   type: 'raster',
+    //   tiles: [
+    //     // Use DataBC Web Mercator Base Map
+    //     'https://maps.gov.bc.ca/arcserver/services/Province/web_mercator_cache/MapServer/WMSServer?bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&srs=EPSG:3857&width=256&height=256&exceptions=text/xml&styles=default&layers=0'
+    //   ],
+    //   tileSize: 256
+    // },
+    // tenures: {
+    //   type: 'raster',
+    //   tiles: [
+    //     'https://openmaps.gov.bc.ca/geo/pub/WHSE_FOREST_TENURE.FTEN_RANGE_POLY_SVW/ows?service=WMS&version=1.1.1&request=GetMap&format=image/png&styles=&layers=pub:WHSE_FOREST_TENURE.FTEN_RANGE_POLY_SVW&srs=EPSG:3857&width=256&height=256&exceptions=text/xml&bbox={bbox-epsg-3857}&BGCOLOR=0xFFFFFF&TRANSPARENT=TRUE'
+    //   ],
+    //   tileSize: 256
+    // },
+    // pastures: {
+    //   type: 'raster',
+    //   tiles: [
+    //     'https://openmaps.gov.bc.ca/geo/pub/WHSE_FOREST_VEGETATION.RANGE_IMP_FEATURE_LINE_SVW/ows?service=WMS&version=1.1.1&request=GetMap&format=image/png&styles=&layers=pub:WHSE_FOREST_VEGETATION.RANGE_IMP_FEATURE_LINE_SVW&srs=EPSG:3857&width=256&height=256&exceptions=text/xml&bbox={bbox-epsg-3857}&BGCOLOR=0xFFFFFF&TRANSPARENT=TRUE'
+    //   ],
+    //   tileSize: 256
+    // },
+    // layer2: {
+    //   type: 'raster',
+    //   tiles: [
+    //     'https://openmaps.gov.bc.ca/geo/pub/WHSE_FOREST_VEGETATION.RANGE_IMP_FEATURE_PNT_SVW/ows?service=WMS&version=1.1.1&request=GetMap&format=image/png&styles=&layers=pub:WHSE_FOREST_VEGETATION.RANGE_IMP_FEATURE_PNT_SVW&srs=EPSG:3857&width=256&height=256&exceptions=text/xml&bbox={bbox-epsg-3857}&BGCOLOR=0xFFFFFF&TRANSPARENT=TRUE'
+    //   ],
+    //   tileSize: 256
+    // }
   },
   layers: [
     {
-      id: 'test',
+      id: 'base',
       type: 'raster',
-      source: 'base-tiles',
+      source: 'base',
       minzoom: 0,
       maxzoom: 24
     }
+    // {
+    //   id: 'tenures',
+    //   type: 'raster',
+    //   source: 'tenures',
+    //   minzoom: 0,
+    //   maxzoom: 24
+    // },
+    // {
+    //   id: 'pastures',
+    //   type: 'raster',
+    //   source: 'pastures',
+    //   minzoom: 0,
+    //   maxzoom: 24
+    // },
+    // {
+    //   id: 'layer2',
+    //   type: 'raster',
+    //   source: 'layer2',
+    //   minzoom: 0,
+    //   maxzoom: 24
+    // }
   ]
 }
 
@@ -66,7 +126,7 @@ class Markers extends React.PureComponent {
   }
 }
 
-export const MyMap = () => {
+export const MyMap = ({ areaSelectorOpen = false, onAreaChange }) => {
   const [viewport, setViewport] = useState({
     latitude: 53.37620087595687,
     longitude: -123.38872720937992,
@@ -103,10 +163,11 @@ export const MyMap = () => {
           height="100%"
           mapStyle={Immutable.fromJS(mapStyle)}
           onViewportChange={setViewport}>
-          <Source type="geojson" data={data}>
+          {/* <Source type="geojson" data={data}>
             <Layer {...dataLayer} />
             <Markers features={data.features} />
-          </Source>
+          </Source> */}
+          {areaSelectorOpen && <AreaSelector onAreaChange={onAreaChange} />}
         </MapGL>
       )}
     </div>

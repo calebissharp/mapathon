@@ -1,4 +1,5 @@
 import React from 'react'
+import clsx from 'clsx'
 import { makeStyles } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -9,6 +10,9 @@ import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import NotificationsIcon from '@material-ui/icons/Notifications'
+import DownloadIcon from '@material-ui/icons/CloudDownload'
+
+const drawerWidth = 240
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -19,10 +23,24 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     flexGrow: 1
+  },
+  appBar: {
+    transition: theme.transitions.create(['margin', 'width'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen
+    })
+  },
+  appBarShift: {
+    width: `calc(100% - ${drawerWidth}px)`,
+    marginRight: drawerWidth,
+    transition: theme.transitions.create(['margin', 'width'], {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen
+    })
   }
 }))
 
-const Navbar = () => {
+const Navbar = ({ drawerOpen, onOpenDrawer, onCloseDrawer }) => {
   const classes = useStyles()
 
   const [anchorEl, setAnchorEl] = React.useState(null)
@@ -38,7 +56,11 @@ const Navbar = () => {
 
   return (
     <div className={classes.root}>
-      <AppBar position="fixed">
+      <AppBar
+        position="fixed"
+        className={clsx(classes.appBar, {
+          [classes.appBarShift]: drawerOpen
+        })}>
         <Toolbar>
           <IconButton
             edge="start"
@@ -50,38 +72,11 @@ const Navbar = () => {
           <Typography variant="h6" className={classes.title}>
             Mapathon
           </Typography>
-          <IconButton aria-label="show 17 new notifications" color="inherit">
-            <Badge badgeContent={17} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
-          <Button color="inherit">Export</Button>
-          <Button color="inherit">Login</Button>
           <IconButton
-            aria-label="account of current user"
-            aria-controls="menu-appbar"
-            aria-haspopup="true"
-            onClick={handleMenu}
-            color="inherit">
-            <AccountCircle />
+            color="inherit"
+            onClick={drawerOpen ? onCloseDrawer : onOpenDrawer}>
+            <DownloadIcon />
           </IconButton>
-          <Menu
-            id="menu-appbar"
-            anchorEl={anchorEl}
-            anchorOrigin={{
-              vertical: 'top',
-              horizontal: 'right'
-            }}
-            keepMounted
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'right'
-            }}
-            open={open}
-            onClose={handleClose}>
-            <MenuItem onClick={handleClose}>Profile</MenuItem>
-            <MenuItem onClick={handleClose}>My account</MenuItem>
-          </Menu>
         </Toolbar>
       </AppBar>
     </div>
