@@ -1,0 +1,21 @@
+apiVersion: template.openshift.io/v1
+kind: Template
+
+objects:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: mapproxy
+  spec:
+    ports:
+    - name: mapproxy
+      nodePort: 0
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      name: mapproxy
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}

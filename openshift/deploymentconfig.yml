@@ -1,0 +1,50 @@
+apiVersion: template.openshift.io/v1
+kind: Template
+labels:
+  template: deploy-template
+
+parameters:
+- description: Openshift project name
+  displayName: Project
+  name: OC_PROJECT
+  required: true
+
+objects:
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    annotations:
+      template.alpha.openshift.io/wait-for-ready: "true"
+    name: mapproxy
+  spec:
+    replicas: 2
+    selector:
+      name: mapproxy
+    strategy:
+      type: Rolling
+    template:
+      metadata:
+        labels:
+          name: mapproxy
+      spec:
+        containers:
+        - env:
+          image: docker-registry.default.svc:5000/${OC_PROJECT}/mapproxy
+          imagePullPolicy: IfNotPresent
+          name: mapproxy
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources:
+            limits:
+              cpu: 500m
+              memory: 4Gi
+            requests:
+              cpu: 100m
+              memory: 256Mi
+          securityContext:
+            capabilities: {}
+            privileged: false
+          terminationMessagePath: /dev/termination-log
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
