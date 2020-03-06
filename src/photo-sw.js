@@ -105,7 +105,6 @@ async function sendPostToServer() {
   const store = await getObjectStore('photos')
   var req = store.openCursor()
   req.onsuccess = async function(event) {
-    console.log('cursor opened')
     var cursor = event.target.result
     if (cursor) {
       // Keep moving the cursor forward and collecting saved
