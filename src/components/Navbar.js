@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import AccountCircle from '@material-ui/icons/AccountCircle'
+import PhotoUploader from './PhotoUploader'
 import NotificationsIcon from '@material-ui/icons/Notifications'
 import DownloadIcon from '@material-ui/icons/CloudDownload'
 
@@ -72,6 +73,7 @@ const Navbar = ({ drawerOpen, onOpenDrawer, onCloseDrawer }) => {
           <Typography variant="h6" className={classes.title}>
             Mapathon
           </Typography>
+          <PhotoUploader />
           <IconButton
             color="inherit"
             onClick={drawerOpen ? onCloseDrawer : onOpenDrawer}>
