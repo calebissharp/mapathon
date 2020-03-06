@@ -11,7 +11,7 @@ const TWO_WEEKS = 14 * ONE_DAY
 
 const app = express()
 app.use(logger('dev'))
-app.use(bodyParser.json({limit: '50mb', extended: true}))
+app.use(bodyParser.json({ limit: '50mb', extended: true }))
 app.use(bodyParser.urlencoded({ extended: false }))
 
 // Helmet
@@ -46,13 +46,15 @@ app.post('/photo', async (req, res) => {
 
     console.log('Got a photo!')
 
-    res.status(200).json({success:true})
+    res.status(200).json({ success: true })
   } catch (error) {
     res.status(400).json({ error: error.message || error })
   }
 })
 
-app.get('/photo-sw.js', (req, res) => res.sendFile(path.resolve(__dirname, '..', 'photo-sw.js')))
+app.get('/photo-sw.js', (req, res) =>
+  res.sendFile(path.resolve(__dirname, '..', 'photo-sw.js'))
+)
 
 // serve built content
 const buildPath = path.resolve(__dirname, '..', '..', 'build')
