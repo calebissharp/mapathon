@@ -4,6 +4,7 @@ const helmet = require('helmet')
 const lusca = require('lusca')
 const bodyParser = require('body-parser')
 const cors = require('cors')
+const path = require('path')
 
 const ONE_DAY = 24 * (60 * 60 * 1000)
 const TWO_WEEKS = 14 * ONE_DAY
@@ -51,8 +52,8 @@ app.post('/photo', async (req, res) => {
   }
 })
 
-app.get('/', function(req, res) {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'))
-})
+// serve built content
+const buildPath = path.resolve(__dirname, '..', '..', 'build')
+app.use(express.static(buildPath))
 
 module.exports = app
