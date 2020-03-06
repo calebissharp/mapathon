@@ -27,7 +27,7 @@ function App() {
   const classes = useStyles()
 
   const [open, setOpen] = React.useState(false)
-  const [areaSelectorOpen, setSelectorOpen] = useState(true)
+  const [areaSelectorOpen, setSelectorOpen] = useState(false)
 
   const handleClose = () => {
     setOpen(false)

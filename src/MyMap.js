@@ -19,8 +19,8 @@ const mapStyle = {
     base: {
       type: 'raster',
       tiles: [
-        'http://localhost:8080/tiles/databc/EPSG3857/{z}/{x}/{y}.png'
-        // 'https://mapproxyoc-range-myra-dev.pathfinder.gov.bc.ca/tiles/databc/EPSG3857/{z}/{x}/{y}.png'
+        // 'http://localhost:8080/tiles/databc/EPSG3857/{z}/{x}/{y}.png'
+        'https://mapproxyoc-range-myra-dev.pathfinder.gov.bc.ca/tiles/databc/EPSG3857/{z}/{x}/{y}.png'
       ],
       scheme: 'xyz',
       tileSize: 256

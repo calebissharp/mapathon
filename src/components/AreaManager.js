@@ -128,8 +128,13 @@ export default function AreaManager({ open = true, onClose, onOpen }) {
         <Divider />
         <List>
           {cachedAreas.map((area, i) => (
-            <ListItem key={`${area}_${i}`}>
-              <ListItemText primary={`Area ${i + 1}`} />
+            <ListItem key={`area_${area.name}`}>
+              {/* {JSON.stringify(area)} */}
+              <ListItemText
+                primary={`${area.name} ${
+                  area.downloading ? ' (Downloading)' : ''
+                }${area.downloading ? ' (Downloaded)' : ''}`}
+              />
               <ListItemSecondaryAction>
                 <IconButton
                   edge="end"
@@ -140,6 +145,7 @@ export default function AreaManager({ open = true, onClose, onOpen }) {
               </ListItemSecondaryAction>
             </ListItem>
           ))}
+          <Divider />
         </List>
         {isSelecting && (
           <>
@@ -151,7 +157,10 @@ export default function AreaManager({ open = true, onClose, onOpen }) {
             </Typography>
             <Button
               onClick={() => {
-                addCachedArea(selectedArea)
+                addCachedArea({
+                  name: `Area ${cachedAreas.length + 1}`,
+                  bounds: selectedArea
+                })
                 setSelecting(false)
               }}
               variant="outlined">
@@ -159,16 +168,6 @@ export default function AreaManager({ open = true, onClose, onOpen }) {
             </Button>
           </>
         )}
-        {/* <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List> */}
       </Drawer>
       <main
         className={clsx(classes.content, {
