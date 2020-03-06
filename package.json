@@ -30,7 +30,7 @@
   "scripts": {
     "start": "react-scripts start",
     "server": "NODE_ENV=development nodemon ./bin/www",
-    "build": "react-scripts build",
+    "build": "EXTEND_ESLINT=true react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prettier": "prettier --write '**/*.js'"

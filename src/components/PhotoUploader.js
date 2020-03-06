@@ -22,20 +22,26 @@ const PhotoUploader = () => {
       const fileReader = new FileReader()
       fileReader.readAsDataURL(file)
       fileReader.onload = () => {
-
-        window.fetch('/photo', {
-          method: 'POST',
-          body: JSON.stringify({photo: fileReader.result}),
-          headers: {
-            'content-type': 'application/json'
-          }
-        }).then(
-          response => response.json() // if the response is a JSON object
-        ).then(
-          success => console.log(success) // Handle the success response object
-        ).catch(
-          error => console.log(error) // Handle the error response object
-        )
+        navigator.serviceWorker.controller.postMessage({
+          photo: fileReader.result
+        })
+        window
+          .fetch('/photo', {
+            method: 'POST',
+            body: JSON.stringify({ photo: fileReader.result }),
+            headers: {
+              'content-type': 'application/json'
+            }
+          })
+          .then(
+            response => response.json() // if the response is a JSON object
+          )
+          .then(
+            success => console.log(success) // Handle the success response object
+          )
+          .catch(
+            error => console.log(error) // Handle the error response object
+          )
       }
     }
   }

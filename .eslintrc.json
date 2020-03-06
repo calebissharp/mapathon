@@ -1,0 +1,9 @@
+{
+  "extends": ["react-app"],
+  "env": {
+    "serviceworker": true
+  },
+  "rules": {
+    "no-restricted-globals": 1
+  }
+}
